@@ -1,4 +1,6 @@
 from Auxiliar_Functions import *
+from Initial_Conditions import *
+from scipy.integrate import odeint
 
 def func_Collective_nu(y, time, params):
     B,mu_0,n_f,n_dim,n_E= params  # unpack parameters
@@ -49,3 +51,25 @@ def func_Collective_nu(y, time, params):
           derivs.append(P_aux[k])
 
     return derivs
+
+
+def solver_two_families(nu_types,E_i,E_f,E_step,E_0,Amplitude,mass_ord):
+
+	#E_vec=np.arange(E_i,E_f,E_step)
+	y0,B,E_vec,t_vec,mu_0,n_f,n_dim,n_E=initiate(nu_types,E_i,E_f,E_step,E_0,Amplitude)
+
+	if mass_ord=="NH": 
+		params=np.array(B),mu_0,n_f,n_dim,n_E
+	elif mass_ord=="IH":
+		params=-1*np.array(B),mu_0,n_f,n_dim,n_E
+	else:
+		print("Not a mass ordering option!")
+		return 0
+
+	psoln= odeint(func_Collective_nu, y0, t_vec, args=(params,))
+	
+	nu, nubar= read_output(psoln,params)
+	nu_e_time,nubar_e_time,nu_x_time,nubar_x_time=read_two_flavor(nu, nubar)
+
+	#return nu_e_time,nubar_e_time, nu_x_time,nubar_x_time
+	return E_vec,t_vec,nu_e_time,nubar_e_time, nu_x_time,nubar_x_time

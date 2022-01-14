@@ -1,17 +1,20 @@
 from Auxiliar_Functions import *
 
-def initiate(nu_types,E_vec,E_0,Amplitude):
+def initiate(nu_types,E_i,E_f,E_step,E_0,Amplitude):
 	y0=[] #Initial state
 	B=[]
 	flavor_sign=1
-	n_f=len(nu_types)
+
+	E_vec=np.arange(E_i,E_f,E_step)
 	n_E=len(E_vec)
+
+	n_f=len(nu_types)
 	n_dim=(n_f**2)-1
-	E_step=E_vec[1]-E_vec[0]
 
 	for i in range(n_E): 
+	  B.append([])
 	  for j in range(n_dim):     
-	    B.append(B_vec(E_vec[i],n_dim)[1+j])
+	    B[i].append(B_vec(E_vec[i],n_dim)[1+j])
 	    
 	  for j in range(n_f):
 	    if nu_types[j]=="nu_x":
@@ -38,4 +41,4 @@ def initiate(nu_types,E_vec,E_0,Amplitude):
 	#mu
 	mu_0=(10)*max(B_vec(E_vec,n_dim)[0])
 
-	return y0,B,t_vec,mu_0,n_f,n_dim,n_E
+	return y0,B,E_vec,t_vec,mu_0,n_f,n_dim,n_E
