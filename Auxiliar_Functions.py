@@ -27,15 +27,23 @@ def Acc(N_e,E):
   A = 2*math.sqrt(2)*E*G_F*N_e
   return A
 
-# B vector
-def B_vec(E,n_dim):
+# L vector
+def L_vec(n_dim):
 	if n_dim==3:
-		E=E*10**6 #From MeV to eV
-		B=delta_m2_31/(2*E)
-		B1=-1*B*np.sin(2*theta_31)
+		L1=0
+		L2=0
+		L3=1
+		return L1,L2,L3
+	else:
+	   	print("Dimension not defined")
+        
+# B vector
+def B_vec(n_dim):
+	if n_dim==3:
+		B1=-1*np.sin(2*theta_31)
 		B2=0
-		B3=B*np.cos(2*theta_31)
-		return B,B1,B2,B3
+		B3=np.cos(2*theta_31)
+		return B1,B2,B3
 	else:
 	   	print("Dimension not defined")
 
@@ -56,10 +64,19 @@ def mu_supernova(r,mu_0): # r in eV⁻¹
   return mu_0*(R_0/r)**4
 mu_supernova_vec=np.vectorize(mu_supernova)
 
+#Electron density profile
+def ne_supernova(r,option,ne): # r in eV⁻¹
+  if option=="no":
+      return 0
+  elif option=="const":
+      return ne
+  else:
+    print("Not a matter option")
+    return 0
 
 ################## Read Output ##########################
 def read_output(psoln,params):
-  B,mu_0,n_f,n_dim,n_E= params
+  n_f,n_dim,n_E= params
   num_diff_nu_compnents=2*n_f*n_dim
   nu,nubar=[],[]
   for l in range(n_dim):

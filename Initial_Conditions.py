@@ -1,8 +1,9 @@
 from Auxiliar_Functions import *
 
-def initiate(nu_types,E_i,E_f,E_step,E_0,Amplitude):
+def initiate(nu_types,t_bins,E_i,E_f,E_step,E_0,Amplitude):
 	y0=[] #Initial state
-	B=[]
+	omega=[]
+	lambda_aux=[]
 	flavor_sign=1
 
 	E_vec=np.arange(E_i,E_f,E_step)
@@ -10,12 +11,11 @@ def initiate(nu_types,E_i,E_f,E_step,E_0,Amplitude):
 
 	n_f=len(nu_types)
 	n_dim=(n_f**2)-1
-
+    
 	for i in range(n_E): 
-	  B.append([])
-	  for j in range(n_dim):     
-	    B[i].append(B_vec(E_vec[i],n_dim)[1+j])
-	    
+	  omega.append(delta_m2_31/(2*E_vec[i]*10**6))
+	  lambda_aux.append(2*math.sqrt(2)*E_vec[i]*G_F)
+        
 	  for j in range(n_f):
 	    if nu_types[j]=="nu_x":
 	      flavor_sign=-1
@@ -33,12 +33,11 @@ def initiate(nu_types,E_i,E_f,E_step,E_0,Amplitude):
 	    y0.append(flavor_sign*nu_spec)
 
 	#time
-	t_bins=1000
-	t_max = 4*(2*np.pi/min(B_vec(E_vec,n_dim)[0])) #eV⁻¹
-	t_step = (2*np.pi/max(B_vec(E_vec,n_dim)[0]))/20 #eV⁻¹
+	t_max = 4*(2*np.pi/min(omega)) #eV⁻¹
+	t_step = (2*np.pi/max(omega))/20 #eV⁻¹
 	t_vec = np.arange(0., t_bins*t_step , t_step) #eV⁻¹
 
 	#mu
-	mu_0=(10)*max(B_vec(E_vec,n_dim)[0])
+	mu_0=(10)*max(omega)
 
-	return y0,B,E_vec,t_vec,mu_0,n_f,n_dim,n_E
+	return y0,omega,lambda_aux,E_vec,t_vec,mu_0,n_f,n_dim,n_E

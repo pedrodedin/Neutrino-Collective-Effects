@@ -3,8 +3,13 @@ from Initial_Conditions import *
 from scipy.integrate import odeint
 
 def func_Collective_nu(y, time, params):
-    B,mu_0,n_f,n_dim,n_E= params  # unpack parameters
+    omega,lambda_aux,mu_0,n_f,n_dim,n_E= params  # unpack parameters
+    B=np.array(B_vec(n_dim))
+    L=np.array(L_vec(n_dim))
+    
     mu=mu_supernova_vec(time,mu_0)
+    ne=ne_supernova(time,"no",0)
+    lamb=lambda_aux*ne
     derivs=[]
     nu, nubar = [],[]
     num_diff_nu_compnents=2*n_f*n_dim
@@ -41,34 +46,34 @@ def func_Collective_nu(y, time, params):
     for i in range(n_E):
       for j in range(n_f):
         #nu 
-        P_aux= cross_prod(nu[i][j],(B[i]-mu*(nu_sum-nubar_sum)))
+        P_aux= cross_prod(nu[i][j],(B*omega[i]+L*lamb[i]-mu*(nu_sum-nubar_sum)))
         for k in range(n_dim):
           derivs.append(P_aux[k])
         
         #nubar
-        P_aux= cross_prod(nu[i][j],(-1*B[i]-mu*(nu_sum-nubar_sum)))
+        P_aux= cross_prod(nu[i][j],(-1*B*omega[i]+L*lamb[i]-mu*(nu_sum-nubar_sum)))
         for k in range(n_dim):
           derivs.append(P_aux[k])
 
     return derivs
 
 
-def solver_two_families(nu_types,E_i,E_f,E_step,E_0,Amplitude,mass_ord):
+def solver_two_families(nu_types,t_bins,E_i,E_f,E_step,E_0,Amplitude,mass_ord):
 
 	#E_vec=np.arange(E_i,E_f,E_step)
-	y0,B,E_vec,t_vec,mu_0,n_f,n_dim,n_E=initiate(nu_types,E_i,E_f,E_step,E_0,Amplitude)
+	y0,omega,lambda_aux,E_vec,t_vec,mu_0,n_f,n_dim,n_E=initiate(nu_types,t_bins,E_i,E_f,E_step,E_0,Amplitude)
 
 	if mass_ord=="NH": 
-		params=np.array(B),mu_0,n_f,n_dim,n_E
+		params=np.array(omega),np.array(lambda_aux),mu_0,n_f,n_dim,n_E
 	elif mass_ord=="IH":
-		params=-1*np.array(B),mu_0,n_f,n_dim,n_E
+		params=-1*np.array(omega),np.array(lambda_aux),mu_0,n_f,n_dim,n_E
 	else:
 		print("Not a mass ordering option!")
 		return 0
 
 	psoln= odeint(func_Collective_nu, y0, t_vec, args=(params,))
 	
-	nu, nubar= read_output(psoln,params)
+	nu, nubar= read_output(psoln,(n_f,n_dim,n_E))
 	nu_e_time,nubar_e_time,nu_x_time,nubar_x_time=read_two_flavor(nu, nubar)
 
 	#return nu_e_time,nubar_e_time, nu_x_time,nubar_x_time
