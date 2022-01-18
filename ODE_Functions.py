@@ -3,13 +3,14 @@ from Initial_Conditions import *
 from scipy.integrate import odeint
 
 def func_Collective_nu(y, time, params):
-    omega,lambda_aux,mu_0,n_f,n_dim,n_E= params  # unpack parameters
+    omega,mu_0,n_f,n_dim,n_E= params  # unpack parameters
     B=np.array(B_vec(n_dim))
     L=np.array(L_vec(n_dim))
     
-    mu=mu_supernova_vec(time,mu_0)
-    ne=ne_supernova(time,"no",0)
-    lamb=lambda_aux*ne
+    r=time/from_eV_to_1_over_km #From eV⁻¹ to km
+    mu=mu_supernova_vec(r,mu_0)
+    lamb=lambda_supernova(r,"no",0)
+    
     derivs=[]
     nu, nubar = [],[]
     num_diff_nu_compnents=2*n_f*n_dim
@@ -46,12 +47,12 @@ def func_Collective_nu(y, time, params):
     for i in range(n_E):
       for j in range(n_f):
         #nu 
-        P_aux= cross_prod(nu[i][j],(B*omega[i]+L*lamb[i]-mu*(nu_sum-nubar_sum)))
+        P_aux= cross_prod(nu[i][j],(B*omega[i]+L*lamb-mu*(nu_sum-nubar_sum)))
         for k in range(n_dim):
           derivs.append(P_aux[k])
         
         #nubar
-        P_aux= cross_prod(nu[i][j],(-1*B*omega[i]+L*lamb[i]-mu*(nu_sum-nubar_sum)))
+        P_aux= cross_prod(nu[i][j],(-1*B*omega[i]+L*lamb-mu*(nu_sum-nubar_sum)))
         for k in range(n_dim):
           derivs.append(P_aux[k])
 
@@ -61,12 +62,12 @@ def func_Collective_nu(y, time, params):
 def solver_two_families(nu_types,t_bins,E_i,E_f,E_step,E_0,Amplitude,mass_ord):
 
 	#E_vec=np.arange(E_i,E_f,E_step)
-	y0,omega,lambda_aux,E_vec,t_vec,mu_0,n_f,n_dim,n_E=initiate(nu_types,t_bins,E_i,E_f,E_step,E_0,Amplitude)
+	y0,omega,E_vec,t_vec,mu_0,n_f,n_dim,n_E=initiate(nu_types,t_bins,E_i,E_f,E_step,E_0,Amplitude)
 
 	if mass_ord=="NH": 
-		params=np.array(omega),np.array(lambda_aux),mu_0,n_f,n_dim,n_E
+		params=np.array(omega),mu_0,n_f,n_dim,n_E
 	elif mass_ord=="IH":
-		params=-1*np.array(omega),np.array(lambda_aux),mu_0,n_f,n_dim,n_E
+		params=-1*np.array(omega),mu_0,n_f,n_dim,n_E
 	else:
 		print("Not a mass ordering option!")
 		return 0

@@ -3,7 +3,6 @@ from Auxiliar_Functions import *
 def initiate(nu_types,t_bins,E_i,E_f,E_step,E_0,Amplitude):
 	y0=[] #Initial state
 	omega=[]
-	lambda_aux=[]
 	flavor_sign=1
 
 	E_vec=np.arange(E_i,E_f,E_step)
@@ -13,9 +12,7 @@ def initiate(nu_types,t_bins,E_i,E_f,E_step,E_0,Amplitude):
 	n_dim=(n_f**2)-1
     
 	for i in range(n_E): 
-	  omega.append(delta_m2_31/(2*E_vec[i]*10**6))
-	  lambda_aux.append(2*math.sqrt(2)*E_vec[i]*G_F)
-        
+	  omega.append(delta_m2_31/(2*E_vec[i]*10**6)) #eV        
 	  for j in range(n_f):
 	    if nu_types[j]=="nu_x":
 	      flavor_sign=-1
@@ -40,4 +37,4 @@ def initiate(nu_types,t_bins,E_i,E_f,E_step,E_0,Amplitude):
 	#mu
 	mu_0=(10)*max(omega)
 
-	return y0,omega,lambda_aux,E_vec,t_vec,mu_0,n_f,n_dim,n_E
+	return y0,omega,E_vec,t_vec,mu_0,n_f,n_dim,n_E

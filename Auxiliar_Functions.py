@@ -10,6 +10,7 @@ theta_31=10**(-2)#\theta_31
 N_A=6.02*10**(23) #Avogadro constant
 from_eV_to_1_over_m=8.065543937*10**5
 from_eV_to_1_over_km=from_eV_to_1_over_m*10**(3)
+from_1_over_cm3_to_eV3=(1.973*10**(-5))**3
 
 ############### Matter Effects (2 Families) ########################
 #Calculate the effective mass squared difference in matter
@@ -56,23 +57,56 @@ def phi(E,E_0,alpha):
 phi_vec= np.vectorize(phi)
 
 #Neutrino potential
-def mu_supernova(r,mu_0): # r in eV⁻¹
-  R_0=4*10**4#m
-  R_0= R_0*(8*10**5) #eV⁻¹
+def mu_supernova(r,mu_0): # r in km
+  R_0=4*10#km
+  #R_0= R_0*(8*10**8) #eV⁻¹
   if r<R_0:
     return mu_0
-  return mu_0*(R_0/r)**4
+  return mu_0*(R_0/r)**4 #eV
 mu_supernova_vec=np.vectorize(mu_supernova)
 
+#Matter density profile
+def SN_density_profile(r,t):
+# r[km],t[s]
+#https://arxiv.org/abs/hep-ph/0304056
+    r=np.array(r)
+    rho_0=10**14*(r**(-2.4)) #g/cm³
+    if t <1:
+        return rho_0
+    
+    else:
+        epsilon=10
+        #r_s=50 #km
+        r_s0=-4.6*10**3 #km - Shockwave initial position
+        v_s=11.3*10**3 #km/s - Shockwave initial velocity
+        a_s=0.2*10**3 #km/s² - Shockwave aceleration
+        r_s=r_s0+v_s*t+1/2*a_s*t**2 #Shockwave position
+        #print(r_s)
+        rho=[]
+        for i in range(len(r)):
+            if r[i]<=r_s:
+                aux=(0.28-0.69*np.log(r[i]))*(np.arcsin(1-r[i]/r_s)**1.1)
+                f=np.exp(aux)
+                rho.append(epsilon*f*rho_0[i])
+            else:
+                rho.append(rho_0[i])
+        return np.array(rho)
+
 #Electron density profile
-def ne_supernova(r,option,ne): # r in eV⁻¹
+def lambda_supernova(r,option,ne=N_A,t=1): # r in km
+  Y_e=0.5
+  m_n=1.67492749804*10**-24 #g
+  ne_aux=0
   if option=="no":
-      return 0
+      ne_aux=0
   elif option=="const":
-      return ne
+      ne_aux=ne
+  elif option=="SN":
+      ne_aux=(Y_e/m_n)*SN_density_profile(r,t)
   else:
     print("Not a matter option")
     return 0
+  return np.sqrt(2)*G_F*from_1_over_cm3_to_eV3*ne_aux #eV
 
 ################## Read Output ##########################
 def read_output(psoln,params):
