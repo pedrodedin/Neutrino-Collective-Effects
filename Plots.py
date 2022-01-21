@@ -6,7 +6,7 @@ import numpy as np
 
 def animation_2_families_spectrum(E_vec,t_vec,nu_e,nubar_e, nu_x,nubar_x,title):
     
-    t_step=10
+    t_step=5
     t_f=len(t_vec)
 
     fig= plt.figure(figsize=(7, 5), dpi= 80, facecolor='w', edgecolor='k')
@@ -16,19 +16,22 @@ def animation_2_families_spectrum(E_vec,t_vec,nu_e,nubar_e, nu_x,nubar_x,title):
     #nu_e
     nu_line, = ax1.plot(E_vec, nu_e[0],color='b',label=r'$\nu_e$')
     ax1.plot(E_vec, nu_e[0],color='b', linestyle="--",label=r'$\nu_e(t=0)$')#Initial
+    #nubar_e
     antinu_line, = ax1.plot(E_vec,nubar_e[0],color='r',label=r'$\overline{\nu}_e$')
     ax1.plot(E_vec, nubar_e[0],color='r', linestyle="--",label=r'$\overline{\nu}_e(t=0)$')#Initial
+    
     #nu_x
-    nu_x_line, = ax1.plot(E_vec,nu_e[0],color='g',label=r'$\nu_x$')
+    nu_x_line, = ax1.plot(E_vec,nu_x[0],color='g',label=r'$\nu_x$')
     ax1.plot(E_vec, nu_x[0],color='g', linestyle="--",label=r'$\nu_x(t=0)$')#Initial
+    #nubar_x
     antinu_x_line, = ax1.plot(E_vec,nubar_x[0],color='orange',label=r'$\overline{\nu}_x$')
-    ax1.plot(E_vec, nubar_x[0],color='orange', linestyle="--",label=r'$\nu_x(t=0)$')#Initial
+    ax1.plot(E_vec, nubar_x[0],color='orange', linestyle="--",label=r'$\overline{\nu}_x(t=0)$')#Initial
+    
     #ax1.set_ylim(0,0.07)
     ax1.set_title(title)
     ax1.legend(loc='upper right')
 
     def update(t_i):
-        #NH
         nu_line.set_data(E_vec,nu_e[t_i])
         antinu_line.set_data(E_vec,nubar_e[t_i])
         nu_x_line.set_data(E_vec,nu_x[t_i])

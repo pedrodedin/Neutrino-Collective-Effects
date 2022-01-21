@@ -31,10 +31,7 @@ def Acc(N_e,E):
 # L vector
 def L_vec(n_dim):
 	if n_dim==3:
-		L1=0
-		L2=0
-		L3=1
-		return L1,L2,L3
+		return 0,0,1
 	else:
 	   	print("Dimension not defined")
         
@@ -167,6 +164,33 @@ def read_two_flavor(nu, nubar):
 
         nubar_e_time[l].append(P3_e)
         nubar_x_time[l].append(-1*P3_x)
+
+  return   nu_e_time,nubar_e_time, nu_x_time,nubar_x_time
+
+def read_two_flavor_v1(nu, nubar):
+  nu_e_time,nubar_e_time=[],[]
+  nu_x_time,nubar_x_time=[],[]
+
+  for l in range(len(nu[0][0])): #time array length
+      nu_e_time.append([])
+      nubar_e_time.append([])
+      nu_x_time.append([])
+      nubar_x_time.append([])
+    
+      for i in range(len(nu[0][0][0])): 
+        #nu
+        Pee=(1/2)*(1+nu[2][0][l][i]/nu[2][0][0][i])
+        Pxx=(1/2)*(1+nu[2][1][l][i]/nu[2][1][0][i])
+
+        nu_e_time[l].append(Pee*nu[2][0][0][i]+(1-Pxx)*(-1)*nu[2][1][0][i])
+        nu_x_time[l].append(Pxx*(-1)*nu[2][1][0][i]+(1-Pee)*nu[2][0][0][i])
+
+        #nubar
+        Pee=(1/2)*(1+nubar[2][0][l][i]/nubar[2][0][0][i])
+        Pxx=(1/2)*(1+nubar[2][1][l][i]/nubar[2][1][0][i])
+
+        nubar_e_time[l].append(Pee*nubar[2][0][0][i]+(1-Pxx)*(-1)*nubar[2][1][0][i])
+        nubar_x_time[l].append(Pxx*(-1)*nubar[2][1][0][i]+(1-Pee)*nubar[2][0][0][i])
 
   return   nu_e_time,nubar_e_time, nu_x_time,nubar_x_time
 
