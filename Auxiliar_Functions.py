@@ -8,9 +8,11 @@ delta_m2_31=2.5*10**(-3) #eV² - \Delta m²_31
 #theta_31=np.arcsin(math.sqrt(2.18*10**-2)) #\theta_31
 theta_31=10**(-2)#\theta_31
 N_A=6.02*10**(23) #Avogadro constant
-from_eV_to_1_over_m=8.065543937*10**5
+from_eV_to_1_over_m=5.068*10**6
+#from_eV_to_1_over_m=8.065543937*10**5
 from_eV_to_1_over_km=from_eV_to_1_over_m*10**(3)
 from_1_over_cm3_to_eV3=(1.973*10**(-5))**3
+erg_to_MeV=6.2415*10**5
 
 ############### Matter Effects (2 Families) ########################
 #Calculate the effective mass squared difference in matter
@@ -61,6 +63,10 @@ def mu_supernova(r,mu_0): # r in km
     return mu_0
   return mu_0*(R_0/r)**4 #eV
 mu_supernova_vec=np.vectorize(mu_supernova)
+
+def D_geom(r,R_nu):
+    #r [km]
+    return (1-np.sqrt(1-(R_nu/r)**2))**2
 
 #Matter density profile
 def SN_density_profile(r,t):
