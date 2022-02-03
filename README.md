@@ -1,4 +1,4 @@
-# Neutrino Collective Effects Pytho Numerical Solver
+# Neutrino Collective Effects Python Numerical Solver
 
 An Open Source code to workout numerical solutions for neutrino evolution considering neutrino-neutrino forward scattering (Collective Effects). Although it can be used for different scenarios, our focus is on the supernovae environment.
 
