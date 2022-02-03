@@ -42,15 +42,15 @@ def initiate(nu_types,r_i,r_f,E_i,E_f,E_step,E_0,Lum):
 
 	#mu
 	print(mu_0)
-	mu_0=(1000)*max(omega)
-	print(mu_0)
+	#mu_0=(10000)*max(omega)
+	#print(mu_0)
 
     
 	#time
 	t_i=r_i*from_eV_to_1_over_km #eV⁻¹
 	t_f=r_f*from_eV_to_1_over_km #eV⁻¹
 	w_max=max(omega)
-	t_step = (2*np.pi/w_max)/25 #eV⁻¹
+	t_step = (2*np.pi/w_max)/100 #eV⁻¹
 	t_vec = np.arange(t_i,t_f, t_step) #eV⁻¹
 
 	return y0,omega,E_vec,t_vec,mu_0,n_f,n_dim,n_E
@@ -62,6 +62,7 @@ def func_Collective_nu(y, time, params):
     L=np.array(L_vec(n_dim))
     
     r=time/from_eV_to_1_over_km #From eV⁻¹ to km
+    print(r," km")
     #mu=mu_supernova_vec(r,mu_0)
     mu=mu_0*D_geom(r,R_nu)#eV⁻¹
     lamb=lambda_supernova(r,"no",0)
