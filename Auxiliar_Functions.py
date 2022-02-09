@@ -5,8 +5,10 @@ import math
 ############# Constants ########################################
 G_F=1.1663787*10**(-23) #eV⁻² - Fermi Constant
 delta_m2_31=2.5*10**(-3) #eV² - \Delta m²_31
+delta_m2_21=7.53*10**(-5); #eV²
 #theta_31=np.arcsin(math.sqrt(2.18*10**-2)) #\theta_31
 theta_31=10**(-2)#\theta_31
+theta_21=np.arcsin(math.sqrt(0.307));
 N_A=6.02*10**(23) #Avogadro constant
 from_eV_to_1_over_m=5.068*10**6
 #from_eV_to_1_over_m=8.065543937*10**5
@@ -38,11 +40,11 @@ def L_vec(n_dim):
 	   	print("Dimension not defined")
         
 # B vector
-def B_vec(n_dim):
+def B_vec(n_dim,theta):
 	if n_dim==3:
-		B1=-1*np.sin(2*theta_31)
+		B1=-1*np.sin(2*theta)
 		B2=0
-		B3=np.cos(2*theta_31)
+		B3=np.cos(2*theta)
 		return B1,B2,B3
 	else:
 	   	print("Dimension not defined")

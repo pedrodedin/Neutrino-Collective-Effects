@@ -1,8 +1,42 @@
 from mpl_toolkits.mplot3d import Axes3D
 from mpl_toolkits.mplot3d import proj3d
 from matplotlib.animation import FuncAnimation
+from IPython.display import HTML
 import matplotlib.pyplot as plt
 import numpy as np
+from Auxiliar_Functions import *
+
+def Plot_Probability_Solar(S3,r_per_R_sol,E):
+    Pee_high_E = np.sin(theta_21)**2
+    Pee_low_E = 1-(1/2)*np.sin(2*theta_21)**2
+
+    fig = plt.figure(1, figsize=(15,5)) 
+
+    plt.subplot(121)
+    plt.plot(r_per_R_sol, 1/2*(1+S3),label=r'E=%.1f MeV'%(E))
+    plt.axhline(Pee_high_E,c='r',ls='--',label=r'$\left< \overline{P}_{\nu_e \rightarrow \nu_e}^{High} \right> = sin^2\theta$')
+    plt.axhline(Pee_low_E,c='y',ls='--',label=r'$\left< \overline{P}_{\nu_e \rightarrow \nu_e}^{Low} \right> = 1-\frac{1}{2}sin^2 2\theta$')
+    plt.xlabel(r'$r/R_{\odot}$')
+    plt.ylabel('$P_{ee}$')
+    plt.title(r"Survival Probability - P($\nu_e \rightarrow \nu_e$)")
+    plt.legend(loc='upper right')
+
+    plt.subplot(122)
+    plt.plot(r_per_R_sol, 1/2*(1-S3),label=r'E=%.1f MeV'%(E))
+    plt.axhline(1-Pee_high_E,c='r',ls='--',label=r'$\left< \overline{P}_{\nu_e \rightarrow \nu_\mu}^{High} \right> = 1-sin^2\theta$')
+    plt.axhline(1-Pee_low_E,c='y',ls='--',label=r'$\left< \overline{P}_{\nu_e \rightarrow \nu_e}^{Low} \right> = \frac{1}{2}sin^2 2\theta$')
+    plt.xlabel(r'$r/R_{\odot}$')
+    plt.ylabel('$P_{e\mu}$')
+    plt.title(r"Conversion Probability - P($\nu_e \rightarrow \nu_\mu$)")
+    plt.legend(loc='lower right')
+
+    plt.tight_layout()
+    plt.show()
+
+#def Pol_Vec_Anim_Solar(S,B,r_per_R_sol,E):
+
+    
+######################### Collective Effects #######################################
 
 def animation_2_families_spectrum(E_vec,t_vec,nu_e,nubar_e, nu_x,nubar_x,title):
     

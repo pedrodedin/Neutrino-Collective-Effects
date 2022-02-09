@@ -86,7 +86,7 @@ def initiate_v2(nu_types,t_bins,E_i,E_f,E_step,E_0,Amplitude):
 
 def func_Collective_nu(y, time, params):
     omega,mu_0,n_f,n_dim,n_E= params  # unpack parameters
-    B=np.array(B_vec(n_dim))
+    B=np.array(B_vec(n_dim,theta_31))
     L=np.array(L_vec(n_dim))
     
     r=time/from_eV_to_1_over_km #From eV⁻¹ to km
