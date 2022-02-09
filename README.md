@@ -1,5 +1,8 @@
 # Neutrino Collective Effects Python Numerical Solver
 
+[![DOI](https://zenodo.org/badge/363162761.svg)](https://zenodo.org/badge/latestdoi/363162761)
+
+
 An Open Source code to workout numerical solutions for neutrino evolution considering neutrino-neutrino forward scattering (Collective Effects). Although it can be used for different scenarios, our focus is on the supernovae environment.
 
 We implement the neutrino evolution equation in the formalism of polarization vectors. A better description of the neutrino evolution equation, numerical implementation, and first results, will be described in a future paper.
