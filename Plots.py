@@ -33,7 +33,62 @@ def Plot_Probability_Solar(S3,r_per_R_sol,E):
     plt.tight_layout()
     plt.show()
 
-#def Pol_Vec_Anim_Solar(S,B,r_per_R_sol,E):
+def Pol_Vec_Anim_Solar(S,B,r_per_R_sol,E):
+    r_f=len(r_per_R_sol)
+    r_step=int(r_f/100)
+    if r_step<1:
+        r_step=1
+
+    fig = plt.figure(figsize=(16, 5), dpi= 80, facecolor='w', edgecolor='k')
+    ax1 = fig.add_subplot(1,2,1,projection='3d')
+
+    B1,B2,B3=B[0][0],B[1][0],B[2][0]
+    quiver_B = ax1.quiver(0, 0, 0, B1, B2, B3, arrow_length_ratio=0.05,color='r',label=r'$\vec{B}$',normalize=True)
+
+    P1,P2,P3= S[0][0],S[1][0],S[2][0]
+    quiver = ax1.quiver(0, 0, 0,P1,P2,P3, arrow_length_ratio=0.05,color='b',label=r'$\vec{P}$')
+
+    ax1.set_xlim(-1, 1)
+    ax1.set_ylim(-1, 1)
+    ax1.set_zlim(-1, 1)
+    ax1.quiver(-0.5, 0, 0, 1, 0, 0, arrow_length_ratio=0.05,color='k')
+    ax1.quiver(0, -0.5, 0, 0, 1, 0, arrow_length_ratio=0.05,color='k')
+    ax1.quiver(0, 0, -0.5, 0, 0, 1, arrow_length_ratio=0.05,color='k')
+    ax1.set_title(r'Polarization Vectors - $E_\nu=%.1f$ MeV'%(E))
+    ax1.legend()
+
+    ax2 = fig.add_subplot(1, 2, 2)
+    ax2.set_ylim(0, 1)
+    ax2.set_xlim(0, r_per_R_sol[r_f-1])
+    ax2.set_xlabel(r'$r/R_{\odot}$')
+    ax2.set_ylabel("$P_{e}$")
+    ax2.set_title(r"P($\nu_e \rightarrow \nu_e$)")
+    Pe, = ax2.plot([], [])
+
+    def update(t_i):
+        #3D plot
+        ax1.cla()
+        #Bvector
+        B1,B2,B3 =B[0][t_i],B[1][t_i],B[2][t_i]
+        quiver_B = ax1.quiver(0, 0, 0, B1, B2, B3, arrow_length_ratio=0.05,color='r',normalize=True,label=r'$\vec{B}$')
+        #P vector
+        P1,P2,P3= S[0][t_i],S[1][t_i],S[2][t_i]
+        quiver = ax1.quiver(0, 0, 0,P1,P2,P3, arrow_length_ratio=0.05,color='b',label=r'$\vec{P}$')
+        ax1.set_xlim(-1, 1)
+        ax1.set_ylim(-1, 1)
+        ax1.set_zlim(-1, 1)
+        ax1.quiver(-0.5, 0, 0, 1, 0, 0, arrow_length_ratio=0.05,color='k')
+        ax1.quiver(0, -0.5, 0, 0, 1, 0, arrow_length_ratio=0.05,color='k')
+        ax1.quiver(0, 0, -0.5, 0, 0, 1, arrow_length_ratio=0.05,color='k')
+        ax1.set_title(r'Polarization Vectors - $E_\nu=%.1f$ MeV'%(E))
+        ax1.legend()
+        #Probability plots
+        Pe.set_data(r_per_R_sol[0:t_i], 1/2*(1+S[2][0:t_i]))
+
+    #ani = FuncAnimation(fig, update,fargs=(E), frames=np.arange(0,r_f,r_step), interval=100)
+    ani = FuncAnimation(fig, update, frames=np.arange(0,r_f,r_step), interval=100)
+    plt.close()
+    return ani
 
     
 ######################### Collective Effects #######################################
@@ -72,6 +127,7 @@ def animation_2_families_spectrum(E_vec,t_vec,nu_e,nubar_e, nu_x,nubar_x,title):
         antinu_x_line.set_data(E_vec,nubar_x[t_i])
 
     ani = FuncAnimation(fig, update, frames=np.arange(0,t_f,t_step), interval=100)
+    plt.close()
     return ani
 
 def Plot_Spectrum(E_vec,E_0,nu_e,nubar_e, nu_x,nubar_x,title):

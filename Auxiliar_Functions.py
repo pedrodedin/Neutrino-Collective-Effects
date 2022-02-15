@@ -58,12 +58,20 @@ def phi(E,E_0,alpha):
 phi_vec= np.vectorize(phi)
 
 #Neutrino potential
-def mu_supernova(r,mu_0): # r in km
-  R_0=4*10#km
-  #R_0= R_0*(8*10**8) #eV⁻¹
-  if r<R_0:
-    return mu_0
-  return mu_0*(R_0/r)**4 #eV
+def mu_supernova(r,mu_opt,mu_0=0): # r in km
+    if mu_opt=="SN":
+        R_0=4*10#km
+        #R_0= R_0*(8*10**8) #eV⁻¹
+        if r<R_0:
+            return mu_0
+        return mu_0*(R_0/r)**4 #eV
+    
+    elif mu_opt=="const":
+        return mu_0
+    
+    else:
+        print("Not a mu option!")
+        return 0     
 mu_supernova_vec=np.vectorize(mu_supernova)
 
 def D_geom(r,R_nu):
