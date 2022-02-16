@@ -2,10 +2,8 @@ from Auxiliar_Functions import *
 from scipy.integrate import odeint
 
 def func_Isotropic_Monoenergetic(y, time, params):
-#     nu1, nu2, nu3, antinu1, antinu2, antinu3 = y      # unpack current values of y
     omega,mu_opt,mu_0,lamb_opt,lamb_0,n_dim= params  # unpack parameters
     
-    #B1,B2,B3=omega*np.array(B_vec(n_dim,theta_31))
     B=np.array(B_vec(n_dim,theta_31))
     L=np.array(L_vec(n_dim))
     
@@ -13,14 +11,6 @@ def func_Isotropic_Monoenergetic(y, time, params):
     mu=mu_supernova(r,mu_opt,mu_0)
     lamb=lambda_supernova(r,lamb_opt,lamb_0)
 
-#     derivs = [nu2*B3-nu3*B2 +mu*(nu2*antinu3-nu3*antinu2) ,      # list of dy/dt=f functions
-#               nu3*B1-nu1*B3 +mu*(nu3*antinu1-nu1*antinu3) ,
-#               nu1*B2-nu2*B1 +mu*(nu1*antinu2-nu2*antinu1) ,
-#               -1*(antinu2*B3-antinu3*B2) +mu*(nu2*antinu3-nu3*antinu2),      
-#               -1*(antinu3*B1-antinu1*B3) +mu*(nu3*antinu1-nu1*antinu3),
-#               -1*(antinu1*B2-antinu2*B1) +mu*(nu1*antinu2-nu2*antinu1)] 
-    #nu 
-    #print(y[0:n_dim],y[n_dim:])
     derivs=[]
     P_aux= cross_prod(y[0:n_dim],(B*omega+L*lamb+mu*y[n_dim:]))
     for k in range(n_dim):

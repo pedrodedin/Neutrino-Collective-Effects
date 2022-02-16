@@ -61,7 +61,7 @@ def Pol_Vec_Anim_Solar(S,B,r_per_R_sol,E):
     ax2.set_ylim(0, 1)
     ax2.set_xlim(0, r_per_R_sol[r_f-1])
     ax2.set_xlabel(r'$r/R_{\odot}$')
-    ax2.set_ylabel("$P_{e}$")
+    ax2.set_ylabel("$P_{ee}$")
     ax2.set_title(r"P($\nu_e \rightarrow \nu_e$)")
     Pe, = ax2.plot([], [])
 
@@ -92,6 +92,180 @@ def Pol_Vec_Anim_Solar(S,B,r_per_R_sol,E):
 
     
 ######################### Collective Effects #######################################
+
+
+
+################ Isotropic Mono-eneretic #######################
+
+def Plot_Probability_Isotropic(P_nu_NH,P_nu_IH,r,E,mu_0):
+    fig = plt.figure(1, figsize=(8,5)) 
+    plt.plot(r, 1/2*(1+P_nu_NH[2]/P_nu_NH[2][0]),label='Normal Hierarchy')
+    plt.plot(r, 1/2*(1+P_nu_IH[2]/P_nu_NH[2][0]),label='Inverted Hierarchy')
+    plt.ylabel(r'$P_{\nu_e},P_{\overline{\nu}_e}$')
+    plt.title(r'Survival Probability - $E_{\nu}$=%1.f MeV, $\mu_0$=%1.e eV'%(E,mu_0))
+    plt.xlabel('r [km]')
+    plt.legend(loc='upper right')
+    plt.tight_layout()
+    plt.show()
+
+    
+
+def Pol_Vec_Anim_Isotropic(P_nu,P_nubar,B,r,E,mass_ord):
+    r_f=len(r)
+    r_step=int(r_f/100)
+    if r_step<1:
+        r_step=1
+
+    fig = plt.figure(figsize=(16, 5), dpi= 80, facecolor='w', edgecolor='k')
+    ax1 = fig.add_subplot(1,2,1,projection='3d')
+
+    B1,B2,B3=B[0][0],B[1][0],B[2][0]
+    quiver_B = ax1.quiver(0, 0, 0, B1, B2, B3, arrow_length_ratio=0.05,color='r',label=r'$\vec{B}$',normalize=True)
+
+    P1,P2,P3= P_nu[0][0],P_nu[1][0],P_nu[2][0]
+    quiver = ax1.quiver(0, 0, 0,P1,P2,P3, arrow_length_ratio=0.05,color='b',label=r'$\vec{P}_\nu$')
+    
+    P1,P2,P3= P_nubar[0][0],P_nubar[1][0],P_nubar[2][0]
+    quiver = ax1.quiver(0, 0, 0,P1,P2,P3, arrow_length_ratio=0.05,color='g',label=r'$\vec{P}_{\overline\nu}$')
+
+    ax1.set_xlim(-1, 1)
+    ax1.set_ylim(-1, 1)
+    ax1.set_zlim(-1, 1)
+    ax1.quiver(-0.5, 0, 0, 1, 0, 0, arrow_length_ratio=0.05,color='k')
+    ax1.quiver(0, -0.5, 0, 0, 1, 0, arrow_length_ratio=0.05,color='k')
+    ax1.quiver(0, 0, -0.5, 0, 0, 1, arrow_length_ratio=0.05,color='k')
+    ax1.set_title(r'Polarization Vectors - '+mass_ord+' - '+str(E)+' MeV')
+    ax1.legend()
+
+    ax2 = fig.add_subplot(1, 2, 2)
+    ax2.set_ylim(0, 1)
+    ax2.set_xlim(0, r[r_f-1])
+    ax2.set_xlabel(r'$r [km]$')
+    ax2.set_ylabel("$P_{ee}$")
+    ax2.set_title(r"P($\nu_e \rightarrow \nu_e$)")
+    Pee_nu, = ax2.plot([], [],label=r"$\nu$")
+    Pee_nubar, = ax2.plot([], [],label=r"$\overline{\nu}$")
+    ax2.legend(loc='upper right')
+
+    def update(t_i):
+        #3D plot
+        ax1.cla()
+        #Bvector
+        B1,B2,B3 =B[0][t_i],B[1][t_i],B[2][t_i]
+        quiver_B = ax1.quiver(0, 0, 0, B1, B2, B3, arrow_length_ratio=0.05,color='r',normalize=True,label=r'$\vec{B}$')
+        #P vector
+        P1,P2,P3= P_nu[0][t_i],P_nu[1][t_i],P_nu[2][t_i]
+        quiver = ax1.quiver(0, 0, 0,P1,P2,P3, arrow_length_ratio=0.05,color='b',label=r'$\vec{P}_\nu$')
+        
+        P1,P2,P3= P_nubar[0][t_i],P_nubar[1][t_i],P_nubar[2][t_i]
+        quiver = ax1.quiver(0, 0, 0,P1,P2,P3, arrow_length_ratio=0.05,color='g',label=r'$\vec{P}_{\overline{\nu}}$')
+        
+        ax1.set_xlim(-1, 1)
+        ax1.set_ylim(-1, 1)
+        ax1.set_zlim(-1, 1)
+        ax1.quiver(-0.5, 0, 0, 1, 0, 0, arrow_length_ratio=0.05,color='k')
+        ax1.quiver(0, -0.5, 0, 0, 1, 0, arrow_length_ratio=0.05,color='k')
+        ax1.quiver(0, 0, -0.5, 0, 0, 1, arrow_length_ratio=0.05,color='k')
+        ax1.set_title(r'Polarization Vectors - '+mass_ord+' - '+str(E)+' MeV')
+        ax1.legend()
+        #Probability plots
+        Pee_nu.set_data(r[0:t_i], 1/2*(1+P_nu[2][0:t_i]))
+        Pee_nubar.set_data(r[0:t_i], 1/2*(1+P_nubar[2][0:t_i]))
+
+    #ani = FuncAnimation(fig, update,fargs=(E), frames=np.arange(0,r_f,r_step), interval=100)
+    ani = FuncAnimation(fig, update, frames=np.arange(0,r_f,r_step), interval=100)
+    plt.close()
+    return ani
+
+def Pol_Vec_Anim_Isotropic_mu_Profile(P_nu,P_nubar,B,r,E,mu_0,mass_ord):
+    r_f=len(r)
+    r_step=int(r_f/100)
+    if r_step<1:
+        r_step=1
+
+    fig = plt.figure(figsize=(20, 5), dpi= 80, facecolor='w', edgecolor='k')
+    ax1 = fig.add_subplot(1,3,1,projection='3d')
+
+    B1,B2,B3=B[0][0],B[1][0],B[2][0]
+    quiver_B = ax1.quiver(0, 0, 0, B1, B2, B3, arrow_length_ratio=0.05,color='r',label=r'$\vec{B}$',normalize=True)
+
+    P1,P2,P3= P_nu[0][0],P_nu[1][0],P_nu[2][0]
+    quiver = ax1.quiver(0, 0, 0,P1,P2,P3, arrow_length_ratio=0.05,color='b',label=r'$\vec{P}_\nu$')
+    
+    P1,P2,P3= P_nubar[0][0],P_nubar[1][0],P_nubar[2][0]
+    quiver = ax1.quiver(0, 0, 0,P1,P2,P3, arrow_length_ratio=0.05,color='g',label=r'$\vec{P}_{\overline\nu}$')
+
+    ax1.set_xlim(-1, 1)
+    ax1.set_ylim(-1, 1)
+    ax1.set_zlim(-1, 1)
+    ax1.quiver(-0.5, 0, 0, 1, 0, 0, arrow_length_ratio=0.05,color='k')
+    ax1.quiver(0, -0.5, 0, 0, 1, 0, arrow_length_ratio=0.05,color='k')
+    ax1.quiver(0, 0, -0.5, 0, 0, 1, arrow_length_ratio=0.05,color='k')
+    ax1.set_title(r'Polarization Vectors - '+mass_ord+' - '+str(E)+' MeV')
+    ax1.legend()
+
+    ax2 = fig.add_subplot(1,3,2)
+    ax2.set_ylim(0, 1)
+    ax2.set_xlim(0, r[r_f-1])
+    ax2.set_xlabel(r'$r [km]$')
+    ax2.set_ylabel("$P_{ee}$")
+    ax2.set_title(r"P($\nu_e \rightarrow \nu_e$)")
+    Pee_nu, = ax2.plot([], [],label=r"$\nu$")
+    Pee_nubar, = ax2.plot([], [],label=r"$\overline{\nu}$")
+    ax2.legend(loc='upper right')
+    
+    ax3 = fig.add_subplot(1, 3, 3)
+    mu=[]
+    for r_i in r:
+        mu.append(mu_supernova(r_i,"SN",mu_0))
+    ax3.plot(r,mu)
+    ax3.axhline(y=delta_m2_31/(2*E*10**6), color="red", linestyle="--", label=r'$\omega$ for $E_{\nu}$=%1.f MeV'%(E))
+    ax3.set_xlabel(r'$r$ [km]')
+    ax3.set_ylabel(r'$\mu$ [eV]')
+    ax3.set_yscale('log')
+    ax3.set_title(r"$\mu$ Profile Model for Supernova - $\mu_0=$%.2e eV"%(mu_0))
+    mu_point, = ax3.plot(r[0],mu_supernova(r[0],"SN",mu_0),'r.',markersize=12,label=r'$\mu(r)$')
+    ax3.legend()
+
+    def update(t_i):
+        #3D plot
+        ax1.cla()
+        #Bvector
+        B1,B2,B3 =B[0][t_i],B[1][t_i],B[2][t_i]
+        quiver_B = ax1.quiver(0, 0, 0, B1, B2, B3, arrow_length_ratio=0.05,color='r',normalize=True,label=r'$\vec{B}$')
+        #P vector
+        P1,P2,P3= P_nu[0][t_i],P_nu[1][t_i],P_nu[2][t_i]
+        quiver = ax1.quiver(0, 0, 0,P1,P2,P3, arrow_length_ratio=0.05,color='b',label=r'$\vec{P}_{\nu}$')
+        
+        P1,P2,P3= P_nubar[0][t_i],P_nubar[1][t_i],P_nubar[2][t_i]
+        quiver = ax1.quiver(0, 0, 0,P1,P2,P3, arrow_length_ratio=0.05,color='g',label=r'$\vec{P}_{\overline{\nu}}$')
+        
+        ax1.set_xlim(-1, 1)
+        ax1.set_ylim(-1, 1)
+        ax1.set_zlim(-1, 1)
+        ax1.quiver(-0.5, 0, 0, 1, 0, 0, arrow_length_ratio=0.05,color='k')
+        ax1.quiver(0, -0.5, 0, 0, 1, 0, arrow_length_ratio=0.05,color='k')
+        ax1.quiver(0, 0, -0.5, 0, 0, 1, arrow_length_ratio=0.05,color='k')
+        ax1.set_title(r'Polarization Vectors - '+mass_ord+' - '+str(E)+' MeV')
+        ax1.legend()
+        
+        #Probability plots
+        Pee_nu.set_data(r[0:t_i], 1/2*(1+P_nu[2][0:t_i]))
+        Pee_nubar.set_data(r[0:t_i], 1/2*(1+P_nubar[2][0:t_i]))
+        
+        #mu profile
+        mu_point.set_data(r[t_i],mu_supernova(r[t_i],"SN",mu_0))
+        
+    #ani = FuncAnimation(fig, update,fargs=(E), frames=np.arange(0,r_f,r_step), interval=100)
+    ani = FuncAnimation(fig, update, frames=np.arange(0,r_f,r_step), interval=100)
+    plt.close()
+    return ani
+
+
+
+
+
+################ Isotropic Spectrum #######################
 
 def animation_2_families_spectrum(E_vec,t_vec,nu_e,nubar_e, nu_x,nubar_x,title):
     

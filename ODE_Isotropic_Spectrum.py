@@ -33,7 +33,7 @@ def initiate(nu_types,r_i,r_f,E_i,E_f,E_step,E_0,Amplitude):
 	#mu
 	mu_0=(10)*max(omega)
 	#r array
-	r_step = (2*np.pi/max(max(omega),mu_0))/10 #eV⁻¹
+	r_step = (2*np.pi/max(omega))/20 #eV⁻¹
 	r_i = r_i*from_eV_to_1_over_km #eV⁻¹
 	r_f = r_f*from_eV_to_1_over_km #eV⁻¹
 	r = np.arange(r_i,r_f,r_step) #eV⁻¹
@@ -158,9 +158,9 @@ def initiate_v2(nu_types,t_bins,E_i,E_f,E_step,E_0,Amplitude):
 	mu_0=(10)*max(omega)
     
 	#time
-	t_max = 4*(2*np.pi/min(omega)) #eV⁻¹
-	w_max=max(mu_0,max(omega))
-	t_step = (2*np.pi/w_max)/5 #eV⁻¹
+	#t_max = 4*(2*np.pi/min(omega)) #eV⁻¹
+	w_max=max(omega)
+	t_step = (2*np.pi/w_max)/100 #eV⁻¹
 	t_vec = np.arange(0., t_bins*t_step , t_step) #eV⁻¹
 
 

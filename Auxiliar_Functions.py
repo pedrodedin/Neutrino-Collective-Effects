@@ -6,8 +6,8 @@ import math
 G_F=1.1663787*10**(-23) #eV⁻² - Fermi Constant
 delta_m2_31=2.5*10**(-3) #eV² - \Delta m²_31
 delta_m2_21=7.53*10**(-5); #eV²
-#theta_31=np.arcsin(math.sqrt(2.18*10**-2)) #\theta_31
-theta_31=10**(-2)#\theta_31
+theta_31=np.arcsin(math.sqrt(2.18*10**-2)) #\theta_31
+#theta_31=10**(-2)#\theta_31
 theta_21=np.arcsin(math.sqrt(0.307));
 N_A=6.02*10**(23) #Avogadro constant
 from_eV_to_1_over_m=5.068*10**6
@@ -60,8 +60,16 @@ phi_vec= np.vectorize(phi)
 #Neutrino potential
 def mu_supernova(r,mu_opt,mu_0=0): # r in km
     if mu_opt=="SN":
-        R_0=4*10#km
-        #R_0= R_0*(8*10**8) #eV⁻¹
+        R_0=40#km
+#         r=np.array(r)
+#         return np.where(r <=R_0,mu_0,mu_0*(R_0/r)**4)
+#         mu=[]
+#         for r_i in r: 
+#             if r_i<=R_0:
+#                 mu.append(mu_0)
+#             else:
+#                 mu.append(mu_0*(R_0/r_i)**4)
+#         return np.array(mu)
         if r<R_0:
             return mu_0
         return mu_0*(R_0/r)**4 #eV
