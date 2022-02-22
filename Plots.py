@@ -315,7 +315,7 @@ def animation_2_families_spectrum(E_vec,t_vec,nu_e,nubar_e, nu_x,nubar_x,title):
     plt.close()
     return ani
 
-def Plot_Spectrum(E_vec,E_0,nu_e,nubar_e, nu_x,nubar_x,title):
+def Plot_Spectrum(E_vec,E_0,mu_0,nu_e,nubar_e, nu_x,nubar_x,title):
     fig= plt.figure(figsize=(15, 6), dpi= 80, facecolor='w', edgecolor='k')
     
     ax1=fig.add_subplot(1,2,1)
@@ -347,5 +347,5 @@ def Plot_Spectrum(E_vec,E_0,nu_e,nubar_e, nu_x,nubar_x,title):
     ax2.set_ylim(0,1.1*max(nu_e[0]))
     
     fig.suptitle((r'Isotropic Neutrino Gas - Mass Hierarchy: %s'%(title))+"\n"+
-                 (r"$\overline{E}_{\nu_e}= %.1f$ MeV, $\overline{E}_{\overline{\nu}_e}= %.1f$ MeV, $\overline{E}_{\nu_x}= %.1f$ MeV"%(E_0[0],E_0[1],E_0[2])))
+                 (r"$\overline{E}_{\nu_e}= %.1f$ MeV, $\overline{E}_{\overline{\nu}_e}= %.1f$ MeV, $\overline{E}_{\nu_x}= %.1f$ MeV, $\mu_0$=%1.e eV"%(E_0[0],E_0[1],E_0[2],mu_0)))
     fig.savefig("Figures/Isotrpic_Gas_Spectrum_%s.png"%title)

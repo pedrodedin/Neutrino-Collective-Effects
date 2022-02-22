@@ -117,7 +117,7 @@ def solver_two_families(nu_types,r_i,r_f,E_i,E_f,E_step,E_0,Amplitude,mass_ord):
 	r=r/from_eV_to_1_over_km #From eV⁻¹ to km
 
 	#return nu_e_time,nubar_e_time, nu_x_time,nubar_x_time
-	return E_vec,r,nu_e_time,nubar_e_time, nu_x_time,nubar_x_time, nu, nubar
+	return E_vec,r,mu_0,nu_e_time,nubar_e_time, nu_x_time,nubar_x_time, nu, nubar
 
 
 

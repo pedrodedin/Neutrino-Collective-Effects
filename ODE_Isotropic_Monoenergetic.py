@@ -36,7 +36,8 @@ def solver_Isotropic_Monoenergetic(P,E,r_i,r_f,mass_ord,mu_opt,mu_0,lamb_opt="no
     if mass_ord=="NH": 
         params=omega,mu_opt,mu_0,lamb_opt,lamb_0,n_dim
     elif mass_ord=="IH":
-        params=-1*omega,mu_opt,mu_0,lamb_opt,lamb_0,n_dim
+        omega=-1*omega
+        params=omega,mu_opt,mu_0,lamb_opt,lamb_0,n_dim
     else:
         print("Not a mass ordering option!")
         return 0
