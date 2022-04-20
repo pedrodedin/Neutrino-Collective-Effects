@@ -51,6 +51,7 @@ def initiate(nu_types,r_i,r_f,E_i,E_f,E_step,E_0,Lum):
 	t_f=r_f*from_eV_to_1_over_km #eV⁻¹
 	w_max=max(omega)
 	t_step = (2*np.pi/w_max)/100 #eV⁻¹
+	t_step =(2*np.pi/max(w_max,mu_0))#eV⁻¹
 	t_vec = np.arange(t_i,t_f, t_step) #eV⁻¹
 
 	return y0,omega,E_vec,t_vec,mu_0,n_f,n_dim,n_E
