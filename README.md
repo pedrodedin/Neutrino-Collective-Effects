@@ -11,7 +11,7 @@ We implement the neutrino evolution equation in the formalism of polarization ve
 
 For questions, comments, or bug reports, please contact Pedro Dedin Neto (pedroneto293@gmail.com).
 
-## Instalation
+## Installation
 
 You only need to clone this repository:
 
