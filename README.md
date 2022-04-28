@@ -19,7 +19,7 @@ You can download the soruce code or use the git clone command:
 git clone https://github.com/pedrodedin/Neutrino-Collective-Effects.git
 ```
 
-And install the requested pyhton libraries ( [NumPy](http://www.numpy.org),  [SciPy](https://www.scipy.org), [Matplotlib](https://matplotlib.org/) ).
+You also need to install the requested pyhton libraries ( [NumPy](http://www.numpy.org),  [SciPy](https://www.scipy.org), [Matplotlib](https://matplotlib.org/) ).
 
 ## Usage
 
