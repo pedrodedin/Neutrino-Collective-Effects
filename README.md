@@ -11,9 +11,9 @@ We implement the neutrino evolution equation in the formalism of polarization ve
 
 For questions, comments, or bug reports, please contact Pedro Dedin Neto (pedroneto293@gmail.com).
 
-## Installation
+## Download
 
-You only need to clone this repository:
+You can download the soruce code or use the git clone command:
 
 ```bash
 git clone https://github.com/pedrodedin/Neutrino-Collective-Effects.git
