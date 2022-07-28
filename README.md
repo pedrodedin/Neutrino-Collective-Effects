@@ -33,7 +33,7 @@ In summary, the system of equations to be numerically solved are implemented in 
 
 The file [`Auxiliar_Functions.py`](Auxiliar_Functions.py) contains auxiliary functions used in the numerical solver, such as matter potential profiles 	&lambda;(r), neutrino-neutrino profiles &mu;(r), functions to read the output of the numerical solver, etc.
 
-The file [`Plots.py`](Plots.py) holds functions to do plots and the Python notebook [`Animations.ipynb`](Animations.ipynb) is used to create animations, such as the spectra evolution, and the polarization vectors precession.
+The file [`Plots.py`](Plots.py) holds functions to do plots.
 
 ## Notes
  
