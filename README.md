@@ -11,15 +11,15 @@ We implement the neutrino evolution equation in the formalism of polarization ve
 
 For questions, comments, or bug reports, please contact Pedro Dedin Neto (pedroneto293@gmail.com).
 
-## Installation
+## Download
 
-You only need to clone this repository:
+You can download the soruce code or use the git clone command:
 
 ```bash
 git clone https://github.com/pedrodedin/Neutrino-Collective-Effects.git
 ```
 
-And install the requested pyhton libraries ( [NumPy](http://www.numpy.org),  [SciPy](https://www.scipy.org), [Matplotlib](https://matplotlib.org/) ).
+You also need to install the requested pyhton libraries ( [NumPy](http://www.numpy.org),  [SciPy](https://www.scipy.org), [Matplotlib](https://matplotlib.org/) ).
 
 ## Usage
 

@@ -63,7 +63,7 @@ def func_Collective_nu(y, time, params):
     L=np.array(L_vec(n_dim))
     
     r=time/from_eV_to_1_over_km #From eV⁻¹ to km
-    print(r," km")
+    #print(r," km")
     #mu=mu_supernova_vec(r,mu_0)
     mu=mu_0*D_geom(r,R_nu)#eV⁻¹
     lamb=lambda_supernova(r,"no",0)
