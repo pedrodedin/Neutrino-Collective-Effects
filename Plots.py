@@ -102,23 +102,23 @@ def Pol_Vec_Anim_Solar(S,B,r_per_R_sol,E):
 
 ################ Isotropic Mono-eneretic #######################
 
-def Plot_Probability_Isotropic(P_nu_NH,P_nu_IH,r,E,mu_0):
+def Plot_Probability_Isotropic(P_nu_NH,P_nu_IH,r,E,omega,mu_0):
     fig = plt.figure(1, figsize=(8,5)) 
     plt.plot(r, 1/2*(1+P_nu_NH[2]/P_nu_NH[2][0]),label='Normal Hierarchy')
-    plt.plot(r, 1/2*(1+P_nu_IH[2]/P_nu_NH[2][0]),label='Inverted Hierarchy')
+    plt.plot(r, 1/2*(1+P_nu_IH[2]/P_nu_NH[2][0]),ls='--',label='Inverted Hierarchy')
     plt.ylabel(r'$P_{\nu_e},P_{\overline{\nu}_e}$')
-    plt.title(r'Survival Probability - $E_{\nu}$=%1.f MeV, $\mu_0$=%1.e eV'%(E,mu_0))
+    plt.title(r'Survival Probability - $E_{\nu}$=%1.f MeV, $\omega$=%1.e eV, $\mu_0$=%1.e eV'%(E,omega,mu_0))
     plt.xlabel('r [km]')
     plt.legend(loc='upper right')
     plt.tight_layout()
     plt.show()
 
-def Plot_Probability_Isotropic_2(P_nu,names,r,E,mu_0):
+def Plot_Probability_Isotropic_2(P_nu,names,r,E,omega,mu_0):
     fig = plt.figure(1, figsize=(8,5)) 
     for i in range(len(P_nu)):
-        plt.plot(r, 1/2*(1+P_nu[i][2]/P_nu[i][2][0]),label=names[i])
+        plt.plot(r, 1/2*(1+P_nu[i][2]/P_nu[i][2][0]),label=names[i][0],ls=names[i][1],lw=names[i][2])
     plt.ylabel(r'$P_{\nu_e},P_{\overline{\nu}_e}$')
-    plt.title(r'Survival Probability - $E_{\nu}$=%1.f MeV, $\mu_0$=%1.e eV'%(E,mu_0))
+    plt.title(r'Survival Probability - $E_{\nu}$=%1.f MeV, $\omega$=%1.e eV, $\mu_0$=%1.e eV'%(E,omega,mu_0))
     plt.xlabel('r [km]')
     plt.ylim(0,1.05)
     plt.legend(loc='upper right')
