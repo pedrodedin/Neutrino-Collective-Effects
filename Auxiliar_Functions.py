@@ -218,6 +218,25 @@ def read_two_flavor_v1(nu, nubar):
 
   return   nu_e_time,nubar_e_time, nu_x_time,nubar_x_time
 
+def read_two_flavor_Probability(nu, nubar):
+  Pee_time,nubar_e_time=[],[]
+  Peebar_time,nubar_x_time=[],[]
+
+  for l in range(len(nu[0][0])): #time array length
+      Pee_time.append([])
+      Peebar_time.append([])
+    
+      for i in range(len(nu[0][0][0])): 
+        #nu
+        Pee=(1/2)*(1+nu[2][0][l][i]/nu[2][0][0][i])
+        Pee_time[l].append(Pee)
+        #nubar
+        Peebar=(1/2)*(1+nubar[2][0][l][i]/nubar[2][0][0][i])
+        Peebar_time[l].append(Peebar)
+
+
+  return   Pee_time,Peebar_time
+
 ################### Group ######################
 def structure_constant(n_dim,i,j,k):
     if i==j or i==k or j==k:
