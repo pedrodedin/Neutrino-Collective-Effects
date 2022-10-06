@@ -29,7 +29,8 @@ In summary, the system of equations to be numerically solved are implemented in 
 
 * Isotropic and Monoenergetic Neutrino Gas:
 * Isotropic Neutrino Gas with Spectral Distribution:
-* **In Construction:** Bulb Model Emission
+* **Under Construction:** Bulb Model Emission
+* **Under Construction:** Fast Oscillations (Crossing in the angular distribution)
 
 The file [`Auxiliar_Functions.py`](Auxiliar_Functions.py) contains auxiliary functions used in the numerical solver, such as matter potential profiles 	&lambda;(r), neutrino-neutrino profiles &mu;(r), functions to read the output of the numerical solver, etc.
 
