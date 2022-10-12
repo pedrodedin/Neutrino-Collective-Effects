@@ -6,6 +6,25 @@ import matplotlib.pyplot as plt
 import numpy as np
 from Auxiliar_Functions import *
 
+import os
+os.environ['PATH'] = os.environ['PATH'] + ':/Library/TeX/texbin/'
+import matplotlib.colors as mcolors
+plt.style.use(['science',"std-colors"])
+# plt.rcParams['axes.prop_cycle'] = plt.cycler(color=mcolors.TABLEAU_COLORS)
+# plt.style.use('default')
+# plt.rcParams['text.usetex'] = True
+plt.rcParams['font.size'] = 15
+plt.rcParams['legend.fontsize'] = 15
+plt.rcParams['axes.labelsize'] = 18
+plt.rcParams["legend.frameon"]=True
+
+plt.rcParams['lines.linewidth'] = 1.5
+# plt.rcParams['xtick.major.size'] = 5.0
+# plt.rcParams['xtick.minor.size'] = 3.0
+# plt.rcParams['ytick.major.size'] = 5.0
+# plt.rcParams['ytick.minor.size'] = 3.0
+
+
 def Plot_Probability_Solar(S3,r_per_R_sol,E):
     Pee_high_E = np.sin(theta_21)**2
     Pee_low_E = 1-(1/2)*np.sin(2*theta_21)**2
@@ -333,7 +352,7 @@ def Plot_Spectrum(E_vec,E_0,mu_0,nu_e,nubar_e, nu_x,nubar_x,title):
     #Text
     ax1.set_title("Neutrinos")
     ax1.set_xlabel(r'$E [MeV]$')
-    ax1.set_ylabel(r'$\phi(E) [MeV^{-1}]$')
+    ax1.set_ylabel(r'$\phi(E) [a.u.]$')
     ax1.legend(loc='upper right')
     ax1.set_ylim(0,1.1*max(nu_e[0]))
     
@@ -347,10 +366,11 @@ def Plot_Spectrum(E_vec,E_0,mu_0,nu_e,nubar_e, nu_x,nubar_x,title):
     #Text
     ax2.set_title("Antineutrinos")
     ax2.set_xlabel(r'$E [MeV]$')
-    ax2.set_ylabel(r'$\phi(E) [MeV^{-1}]$')
+    ax2.set_ylabel(r'$\phi(E) [a.u.]$')
     ax2.legend(loc='upper right')
     ax2.set_ylim(0,1.1*max(nu_e[0]))
     
     fig.suptitle((r'Isotropic Neutrino Gas - Mass Hierarchy: %s'%(title))+"\n"+
                  (r"$\overline{E}_{\nu_e}= %.1f$ MeV, $\overline{E}_{\overline{\nu}_e}= %.1f$ MeV, $\overline{E}_{\nu_x}= %.1f$ MeV, $\mu_0$=%1.e eV"%(E_0[0],E_0[1],E_0[2],mu_0)))
+    plt.tight_layout()
     fig.savefig("Figures/Isotrpic_Gas_Spectrum_%s.png"%title)

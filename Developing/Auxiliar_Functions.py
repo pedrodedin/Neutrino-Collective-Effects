@@ -10,8 +10,10 @@ theta_31=np.arcsin(math.sqrt(2.18*10**-2)) #\theta_31
 #theta_31=10**(-2)#\theta_31
 theta_21=np.arcsin(math.sqrt(0.307));
 N_A=6.02*10**(23) #Avogadro constant
-from_eV_to_1_over_m=5.068*10**6
-#from_eV_to_1_over_m=8.065543937*10**5
+
+h_slash=6.582119569*10**-16# eV⋅s
+c_const=2.99792458*10**8# m/s
+from_eV_to_1_over_m=1/(h_slash*c_const)
 from_eV_to_1_over_km=from_eV_to_1_over_m*10**(3)
 from_1_over_cm3_to_eV3=(1.973*10**(-5))**3
 erg_to_MeV=6.2415*10**5
