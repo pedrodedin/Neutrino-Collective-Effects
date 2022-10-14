@@ -7,7 +7,6 @@ G_F=1.1663787*10**(-23) #eV⁻² - Fermi Constant
 delta_m2_31=2.5*10**(-3) #eV² - \Delta m²_31
 delta_m2_21=7.53*10**(-5); #eV²
 theta_31=np.arcsin(math.sqrt(2.18*10**-2)) #\theta_31
-#theta_31=10**(-2)#\theta_31
 theta_21=np.arcsin(math.sqrt(0.307));
 N_A=6.02*10**(23) #Avogadro constant
 
