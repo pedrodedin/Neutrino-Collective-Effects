@@ -10,7 +10,7 @@ import os
 os.environ['PATH'] = os.environ['PATH'] + ':/Library/TeX/texbin/'
 import matplotlib.colors as mcolors
 plt.style.use(['science',"std-colors"])
-# plt.rcParams['axes.prop_cycle'] = plt.cycler(color=mcolors.TABLEAU_COLORS)
+plt.rcParams['axes.prop_cycle'] = plt.cycler(color=mcolors.TABLEAU_COLORS)
 # plt.style.use('default')
 # plt.rcParams['text.usetex'] = True
 plt.rcParams['font.size'] = 15

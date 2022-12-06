@@ -9,7 +9,7 @@ from Auxiliar_Functions import *
 import os
 os.environ['PATH'] = os.environ['PATH'] + ':/Library/TeX/texbin/'
 import matplotlib.colors as mcolors
-plt.style.use(['science',"high-vis"])
+plt.style.use(['science',"std-colors"])
 plt.rcParams['axes.prop_cycle'] = plt.cycler(color=mcolors.TABLEAU_COLORS)
 # plt.style.use('default')
 # plt.rcParams['text.usetex'] = True
