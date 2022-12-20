@@ -238,6 +238,24 @@ def read_two_flavor_Probability(nu, nubar):
 
   return   Pee_time,Peebar_time
 
+def from_1D_to_MultiD(y,n_f,n_dim,n_theta):
+    nu, nubar = [],[]    
+    #Filling [Theta bin][Nu_Flavors][3components]    
+    for i in range(n_theta):
+      nu.append([])
+      nubar.append([])
+      for j in range(n_f):
+        nu[i].append([])
+        nubar[i].append([])
+        for k in range(n_dim):
+          #nu 
+          nu_index=(i*2*n_dim*n_f)+(j*2*n_dim)+k
+          nu[i][j].append(y[nu_index])
+          #nubar   
+          nubar_index=(i*2*n_dim*n_f)+(j*2*n_dim)+(k+n_dim)
+          nubar[i][j].append(y[nubar_index])
+    return nu, nubar 
+
 ################### Group ######################
 def structure_constant(n_dim,i,j,k):
     if i==j or i==k or j==k:
