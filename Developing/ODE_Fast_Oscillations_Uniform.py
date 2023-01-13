@@ -158,6 +158,6 @@ def solver_FFC_uniform(nu_types,t_i,t_f,E_nu,delta_m2,theta_V,mu_0,theta_bins,ca
         y_sol=np.transpose(psoln.y)
         t=psoln.t
     nu, nubar= read_output(y_sol,(n_f,n_dim,n_theta))    
-    t=t/(c_const*from_eV_to_1_over_m) #From eV⁻¹ to km
+    t=t/(c_const*from_eV_to_1_over_m) #From eV⁻¹ to s
 
     return cos_theta_vec,t,mu_0, nu, nubar
